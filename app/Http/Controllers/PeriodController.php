@@ -12,7 +12,9 @@ class PeriodController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Periods/Index', [ ]);
+        return Inertia::render('Periods/Index', [ 
+            'periods' => period::with('user:id,name')->latest()->get(),
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
