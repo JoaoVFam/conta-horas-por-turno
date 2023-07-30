@@ -37,4 +37,16 @@ class PeriodController extends Controller
  
         return redirect(route('periods.index'));
     }
+
+    public function update(Request $request, Period $period)
+    {
+        $validated = $request->validate([
+            'time_start' => 'date_format:H:i',
+            'time_end' => 'date_format:H:i',
+        ]);
+
+        $this->periodService->update($period, $validated);
+
+        return redirect(route('periods.index'));
+    }
 }

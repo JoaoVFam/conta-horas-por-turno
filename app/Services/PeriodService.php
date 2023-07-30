@@ -25,4 +25,13 @@ class PeriodService
 
         $period->save();
     }
+
+    public function update(Period $period, array $data)
+    {
+        $calculatedTimes = TimeCalculator::calculateDayAndNightTime($data['time_start'], $data['time_end']);
+        $data['day_time'] = $calculatedTimes['day_time'];
+        $data['night_time'] = $calculatedTimes['night_time'];
+
+        $period->update($data);
+    }
 }
