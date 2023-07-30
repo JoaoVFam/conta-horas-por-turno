@@ -13,6 +13,8 @@ class Period extends Model
     protected $fillable = [
         'time_start',
         'time_end',
+        'day_time',
+        'night_time',
     ];
 
     public function user(): BelongsTo

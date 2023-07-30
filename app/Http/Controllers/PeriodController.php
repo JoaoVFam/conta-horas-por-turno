@@ -29,10 +29,11 @@ class PeriodController extends Controller
     {
         $validated = $request->validate([
             'time_start' => 'date_format:H:i',
-            'time_end' => 'date_format:H:i|after:time_start',
+            'time_end' => 'date_format:H:i',
         ]);
-  
-        $request->user()->periods()->create($validated);
+        
+        $user = $request->user();
+        $this->periodService->store($user, $validated);
  
         return redirect(route('periods.index'));
     }
