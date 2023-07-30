@@ -7,13 +7,21 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Services\PeriodService;
 
 class PeriodController extends Controller
 {
+    private PeriodService $periodService;
+
+    public function __construct(PeriodService $periodService)
+    {
+         $this->periodService = $periodService;
+    }
+
     public function index(): Response
     {
         return Inertia::render('Periods/Index', [ 
-            'periods' => period::with('user:id,name')->latest()->get(),
+            'periods' => $this->periodService->getAll(),
         ]);
     }
 
