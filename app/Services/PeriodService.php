@@ -34,4 +34,9 @@ class PeriodService
 
         $period->update($data);
     }
+
+    public function delete(Period $period)
+    {
+        $period->delete();
+    }
 }

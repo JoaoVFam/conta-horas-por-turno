@@ -49,4 +49,10 @@ class PeriodController extends Controller
 
         return redirect(route('periods.index'));
     }
+
+    public function destroy(Period $period): RedirectResponse
+    {
+        $this->periodService->delete($period);
+        return redirect(route('periods.index'));
+    }
 }
