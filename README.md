@@ -30,13 +30,13 @@ composer install
 ```
 
 
-### 2. Instalar dependencias do JavaScript
+### 3. Instalar dependencias do JavaScript
 
 ```bash
 npm install
 ```
 
-### 2. Configurando Ambiente
+### 4. Configurando Ambiente
 
 Crie uma cópia do arquivo .env.example e renomeie para .env. Em seguida, atualize as configurações necessárias, como credenciais do banco de dados.
 
@@ -46,16 +46,18 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-### 2. Rodando Migrações do banco de dados
+### 5. Rodando Migrações do banco de dados
 
 ```bash
 php artisan migrate
 ```
 
-### 2. Servir a aplicação
+### 6. Servir a aplicação
 
 ```bash
+npm run dev
 php artisan serve
 ```
 
 A aplicação deverá estar acessível através do endereço: http://localhost:8000
+A funcionalidade para calcular as horas por turno, estará disponível em http://localhost:8000/periods
