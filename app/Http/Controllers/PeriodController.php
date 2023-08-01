@@ -40,6 +40,8 @@ class PeriodController extends Controller
 
     public function update(Request $request, Period $period)
     {
+        $this->authorize('update', $period);
+
         $validated = $request->validate([
             'time_start' => 'date_format:H:i',
             'time_end' => 'date_format:H:i',
@@ -52,6 +54,7 @@ class PeriodController extends Controller
 
     public function destroy(Period $period): RedirectResponse
     {
+        $this->authorize('delete', $period);
         $this->periodService->delete($period);
         return redirect(route('periods.index'));
     }
