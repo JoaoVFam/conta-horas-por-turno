@@ -28,8 +28,8 @@ class PeriodController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'time_start' => 'date_format:H:i',
-            'time_end' => 'date_format:H:i',
+            'check_in' => 'date_format:H:i',
+            'check_out' => 'date_format:H:i',
         ]);
         
         $user = $request->user();
@@ -43,8 +43,8 @@ class PeriodController extends Controller
         $this->authorize('update', $period);
 
         $validated = $request->validate([
-            'time_start' => 'date_format:H:i',
-            'time_end' => 'date_format:H:i',
+            'check_in' => 'date_format:H:i',
+            'check_out' => 'date_format:H:i',
         ]);
 
         $this->periodService->update($period, $validated);

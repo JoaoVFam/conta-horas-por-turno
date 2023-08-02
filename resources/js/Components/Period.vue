@@ -8,8 +8,8 @@ import { ref } from 'vue';
 const props = defineProps(['period']);
  
 const form = useForm({
-    time_start: props.period.time_start,
-    time_end: props.period.time_end
+    check_in: props.period.check_in,
+    check_out: props.period.check_out
 });
  
 const editing = ref(false);
@@ -23,8 +23,8 @@ const editing = ref(false);
             </div>
             <div class="flex justify-between items-center">
                 <div class="flex flex-grow justify-between items-center">
-                    <p class="mt-4 text-lg text-gray-900">Inicio: {{ period.time_start }}</p>
-                    <p class="mt-4 text-lg text-gray-900">Fim: {{ period.time_end }}</p>
+                    <p class="mt-4 text-lg text-gray-900">Inicio: {{ period.check_in }}</p>
+                    <p class="mt-4 text-lg text-gray-900">Fim: {{ period.check_out }}</p>
                     <p class="mt-4 text-lg text-gray-900">Diurno: {{ period.day_time }}</p>
                     <p class="mt-4 text-lg text-gray-900">Noturno: {{ period.night_time }}</p>
                     <small v-if="period.created_at !== period.updated_at" class="text-sm text-gray-600"> &middot; editado</small>
@@ -49,16 +49,16 @@ const editing = ref(false);
             </div>
             <form v-if="editing" @submit.prevent="form.put(route('periods.update', period.id), { onSuccess: () => editing = false })">
                 <div class="flex justify-between items-center">
-                    <label for="time_start">Início expediente: </label>
+                    <label for="check_in">Início expediente: </label>
                     <input 
-                        v-model="form.time_start" 
+                        v-model="form.check_in" 
                         type="time" 
                         class="border-gray-300 rounded-md shadow-sm"    
                     />
 
-                    <label for="time_end">Fim expediente: </label>
+                    <label for="check_out">Fim expediente: </label>
                     <input 
-                        v-model="form.time_end" 
+                        v-model="form.check_out" 
                         type="time" 
                         class="border-gray-300 rounded-md shadow-sm"
                     />
@@ -68,7 +68,6 @@ const editing = ref(false);
                     <button class="mt-4" @click="editing = false; form.reset(); form.clearErrors()">Cancelar</button>
                 </div>
             </form>
-            <p v-else class="mt-4 text-lg text-gray-900">{{ period.message }}</p>
         </div>
     </div>
 </template>

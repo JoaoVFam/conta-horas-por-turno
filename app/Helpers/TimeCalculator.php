@@ -7,15 +7,15 @@ use DateInterval;
 
 class TimeCalculator
 {
-    public static function calculateDayAndNightTime($timeStart, $timeEnd)
+    public static function calculateDayAndNightTime($checkIn, $checkOut)
     {
-        if ($timeStart < $timeEnd) {
-            return self::auxCalculateDayAndNightTime($timeStart, $timeEnd);
+        if ($checkIn < $checkOut) {
+            return self::auxCalculateDayAndNightTime($checkIn, $checkOut);
         }
 
-        $startToMidnight = self::auxCalculateDayAndNightTime($timeStart, "23:59");
+        $startToMidnight = self::auxCalculateDayAndNightTime($checkIn, "23:59");
         $startToMidnight['night_time'] = self::addOneMinute($startToMidnight['night_time']);
-        $midnightToEnd = self::auxCalculateDayAndNightTime("00:00", $timeEnd);
+        $midnightToEnd = self::auxCalculateDayAndNightTime("00:00", $checkOut);
 
         $dayTime = self::addTimes($startToMidnight['day_time'], $midnightToEnd['day_time']);
         $nightTime = self::addTimes($startToMidnight['night_time'], $midnightToEnd['night_time']);
@@ -26,29 +26,29 @@ class TimeCalculator
         ];
     }
 
-    private static function auxCalculateDayAndNightTime($timeStart, $timeEnd)
+    private static function auxCalculateDayAndNightTime($checkIn, $checkOut)
     {
         $timeFormat = "H:i";
-        $timeStartObj = DateTime::createFromFormat($timeFormat, $timeStart);
-        $timeEndObj = DateTime::createFromFormat($timeFormat, $timeEnd);
+        $checkInObj = DateTime::createFromFormat($timeFormat, $checkIn);
+        $checkOutObj = DateTime::createFromFormat($timeFormat, $checkOut);
 
         $dayStart = DateTime::createFromFormat($timeFormat, "05:00");
         $dayEnd = DateTime::createFromFormat($timeFormat, "22:00");
 
-        if ($timeEndObj <= $dayStart || $timeStartObj >= $dayEnd) {
+        if ($checkOutObj <= $dayStart || $checkInObj >= $dayEnd) {
             $dayTime = "00:00";
-            $nightTime = self::formatMinutesToTime(self::timeToMinutes($timeEndObj) - self::timeToMinutes($timeStartObj));
+            $nightTime = self::formatMinutesToTime(self::timeToMinutes($checkOutObj) - self::timeToMinutes($checkInObj));
             return [
                 'day_time' => $dayTime,
                 'night_time' => $nightTime,
             ];
         }
 
-        $minEnd = min($timeEndObj, $dayEnd);
-        $maxStart = max($timeStartObj, $dayStart);
+        $minEnd = min($checkOutObj, $dayEnd);
+        $maxStart = max($checkInObj, $dayStart);
 
         $dayTimeMinutes = self::timeToMinutes($minEnd) - self::timeToMinutes($maxStart);
-        $nightTimeMinutes = self::timeToMinutes($timeEndObj) - self::timeToMinutes($timeStartObj) - $dayTimeMinutes;
+        $nightTimeMinutes = self::timeToMinutes($checkOutObj) - self::timeToMinutes($checkInObj) - $dayTimeMinutes;
 
         $dayTime = self::formatMinutesToTime($dayTimeMinutes);
         $nightTime = self::formatMinutesToTime($nightTimeMinutes);

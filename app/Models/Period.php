@@ -11,8 +11,8 @@ class Period extends Model
     use HasFactory;
 
     protected $fillable = [
-        'time_start',
-        'time_end',
+        'check_in',
+        'check_out',
         'day_time',
         'night_time',
     ];
